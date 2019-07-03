@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,700');
+
+body {
+  overflow-x: hidden;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.container-inicio{
+  padding-left: 10vh;
+  padding-right: 10vh;
+  
+}
+
+.all-content{
+  margin-top: 3vh;
+}
+
+/* Post*/
+.post{
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #999;
+}
+
+.post .post-title a{
+  color:#333;
+}
+
+.post .thumb{
+  margin-right: 10px;
+  width: 40%;
+}
+
+.post .thumb img{
+  width: 100%;
+  height: 33vh;
+  object-fit: cover;
+}
+
+.post .contenedor-botones{
+  padding-top: 5px;
+  width: 100%;
+}
+
+.list-group{
+  margin-bottom: 20px;
+}
+
+
+
+/* Media Querie*/
+@media screen and (max-width: 768px){
+  .post .thumb{
+    width: 100%;
+    margin-bottom: 20px;
+    margin-right: 0;
+
+  }
+}
+
+
+.carousel-inner{
+ height: 80vh;
+}
+.carousel-item img{
+	object-fit: cover;
+	filter: brightness(70%);
+  width: 100%;
+  height: 100%;
+}
+
+img{
+  opacity: .85;
+}

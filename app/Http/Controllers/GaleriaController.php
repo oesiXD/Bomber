@@ -13,13 +13,11 @@ class Galeriacontroller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-
-{
-    $galeri = Galeria::all();
-        return view('galeria', compact('galeri'));
-
+      {
+              $galeri = Galeria::orderBy('created_at', 'desc')->paginate(5);
+              return view('galerias', compact('galeri'));
         }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -40,13 +38,13 @@ class Galeriacontroller extends Controller
 
 public function display()
 {
-    
+
 
 }
 
 public function store(Request $request)
 {
-   
+
     }
 
     /**

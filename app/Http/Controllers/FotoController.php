@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Foto;
+use App\Galeria;
+use Illuminate\Support\Facades\DB;
 
 class FotoController extends Controller
 {
@@ -14,8 +16,12 @@ class FotoController extends Controller
      */
     public function index()
     {
-       
+
+
     }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -44,10 +50,17 @@ class FotoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id){
+
+        $galeri =  DB::table('galeria')->where('id',$id)->get();
+        $foto =  DB::table('fotos')->select('archivo')->where('galeria_fk',$id)->get();
+        return view('galeria', compact('foto',$foto,'galeri',$galeri));
+
     }
+
+
+
+
 
     /**
      * Show the form for editing the specified resource.

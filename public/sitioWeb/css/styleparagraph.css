@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,700');
+
+body{
+  overflow-x: hidden;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.container-historia{
+  padding-left: 10vh;
+  padding-right: 10vh;
+}
+
+.breadcrumb{
+  margin-top: 20px;
+}
+
+.carousel-item img{
+	filter: brightness(90%);
+  border-radius: 1%;
+  height: 40vh;
+  object-fit:cover;
+
+}
