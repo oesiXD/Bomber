@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Noticia;
 use App\Historium;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HistoriaController extends Controller
 {
@@ -13,8 +15,19 @@ class HistoriaController extends Controller
      */
     public function index()
     {
+      $noti = Noticia::orderBy('created_at', 'desc')->paginate(3);
       $histori = Historium::all();
-      return view('historia', compact('histori',$histori));
+      $numero = DB::table('portadas')->count();
+
+      $numeros = range(1, $numero);
+      shuffle($numeros);
+      foreach ($numeros as $numero) {
+          $num = $numero;
+      }
+
+      $portS = DB::table('portadas')->where('id',$num)->get();
+      return view('historia', compact('histori',$histori,'noti',$noti ,'portS',$portS ));
+
     }
 
     /**

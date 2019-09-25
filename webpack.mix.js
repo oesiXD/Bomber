@@ -33,7 +33,11 @@ mix.styles([
     'public/sitioWeb/css/stylefooter.css',
     'public/sitioWeb/css/styleform.css',
     'public/sitioWeb/css/stylegalery.css',
+    'public/sitioWeb/css/stylephoto.css',
+    'public/sitioWeb/css/stylenavbar.css',
+    'public/sitioWeb/css/stylenotices.css',
     'public/sitioWeb/css/styleparagraph.css',
+    'public/sitioWeb/css/styleparagraph2.css',
     'public/sitioWeb/css/bootstrap.min.css'
 ], 'public/calendar/css/all.css');
 

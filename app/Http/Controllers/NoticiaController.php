@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Noticia;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 class NoticiaController extends Controller
 {
     /**
@@ -13,9 +15,28 @@ class NoticiaController extends Controller
      */
     public function index()
     {
-      $noti = Noticia::orderBy('created_at', 'desc')->paginate(5);
+        $numero = DB::table('portadas')->count();
 
-      return view('noticias', compact('noti'));
+        $numeros = range(1, $numero);
+        shuffle($numeros);
+        foreach ($numeros as $numero) {
+            $num = $numero;
+        }
+
+        $portS = DB::table('portadas')->where('id',$num)->get();
+
+        $numero = DB::table('afiches')->count();
+
+      $numeros = range(1, $numero);
+      shuffle($numeros);
+      foreach ($numeros as $numero) {
+          $num = $numero;
+      }
+
+      $carrusel1 = DB::table('afiches')->where('id',$num)->get();
+
+      $noti = Noticia::where('estado','!=','no aprobado')->orderBy('created_at', 'desc')->paginate(5);
+      return view('noticias', compact('noti','portS','carrusel1'));
 
     }
 

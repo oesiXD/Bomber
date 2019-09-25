@@ -92,23 +92,23 @@
       padding: 0.5%;
 }
 </style>
-  <body>
+  <body style=" background-color: #fbefcc">
     <!--<div id="loader">
       <img src="diarioMural/images/logo.png" alt="">
     </div> -->
 
     <div class="sec-ide">
             <section>
-              <article class="">
+              <article class="" >
                 <div id="recargar">
-            <div class="container-card">
-            <div class="card middle">
-              <div class="top-section">
-                <img src="diarioMural/images/B-3.png" alt="">
-                  <div class="name">
-                    Tareas del Día
-                  </div>
-              </div>
+                     <div class="container-card">
+                        <div class="card middle">
+                         <div class="top-section">
+                         <img src="diarioMural/images/B-3.png" alt="">
+                         <div class="name">
+                            Tareas del Día
+                         </div>
+                         </div>
               @foreach($tare as $tareas)
               <div class="info-section">
                 <h2>{{$tareas->titulo}}
@@ -190,7 +190,7 @@
           </article>
           </section>
           <aside>
-            <div class="col-12 col-md-12 col-xs-12">
+            <div class="col-12 col-md-12 col-xs-12 father">
               <!-- Cards -->
 
               <!-- Fin Cards -->
@@ -225,6 +225,27 @@
           </aside>
         </div>
   </body>
+  <script>
+  $(document).ready(function () {
+    var myInterval = false;
+    myInterval = setInterval(function () {
+        var iScroll = $(window).scrollTop();
+        if (iScroll + $(window).height() == $(document).height()) {
+            iScroll = iScroll - document.height;
+            $('html, section').animate({
+                scrollTop: iScroll
+            }, 1000);
+
+        } else{
+            iScroll = iScroll + 200;
+            $('html, section').animate({
+                scrollTop: iScroll
+            }, 1000);
+        }
+    }, 3000);
+});
+  </script>
+
   <script>
         $(document).ready(function()
         {

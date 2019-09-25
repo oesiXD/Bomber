@@ -1,0 +1,32 @@
+/*Nav*/
+.my-navbar{
+  background: rgba(0, 0, 0, 0.7)!important;
+  position: absolute;
+  width: 100%;
+  z-index: 999;
+}
+.nav-item{
+  margin: 0px 10px;
+}
+.nav-item > a{
+  color: #FFF!important;
+  border-radius: 7%;
+  transition: .2s ease;
+}
+.nav-item:hover a{
+  color: #FFF!important;
+  filter: brightness(90%);
+  color: white;
+  transition: .2s ease;
+}
+.nav-item .nav-link .bg-navbar{
+  background: #fff;
+  height: 1px;
+  margin: auto;
+  width: 0px;
+  transition: .2s all;
+}
+.nav-item:hover .nav-link .bg-navbar{
+  width: 100%;
+  transition: .3s all;
+}

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Foto;
 use App\Galeria;
 use Illuminate\Support\Facades\DB;
 
@@ -53,8 +52,8 @@ class FotoController extends Controller
     public function show($id){
 
         $galeri =  DB::table('galeria')->where('id',$id)->get();
-        $foto =  DB::table('fotos')->select('archivo')->where('galeria_fk',$id)->get();
-        return view('galeria', compact('foto',$foto,'galeri',$galeri));
+        $galeris = Galeria::orderBy('created_at', 'desc')->paginate(3);
+        return view('galeria', compact('galeri',$galeri,'galeris',$galeris));
 
     }
 

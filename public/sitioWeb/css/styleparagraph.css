@@ -6,18 +6,147 @@ body{
 }
 
 .container-historia{
-  padding-left: 10vh;
-  padding-right: 10vh;
+  padding: 6vh 10vh;
 }
 
-.breadcrumb{
-  margin-top: 20px;
+.carousel-inner{
+  height: 60vh;
 }
 
 .carousel-item img{
-	filter: brightness(90%);
-  border-radius: 1%;
-  height: 40vh;
-  object-fit:cover;
-
+	filter: brightness(60%);
+  height: 60vh;
+  object-fit: cover;
 }
+.carousel-caption {
+    padding-bottom: 6%;
+}
+
+.breadcrumb{
+	margin:25px 0 -15px;
+}
+.carousel-caption h1 {
+  color: #fff;
+  margin-bottom: 0;
+  font-size: 60px;
+  line-height: 60px;
+  opacity: 0;
+  animation: entradaTitulo .9s ease .5s forwards;
+}
+@keyframes entradaTitulo {
+	from {
+		opacity: 0;
+		transform: translateX(25px);
+	}
+
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+.carousel-caption .breadcrumb {
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  background-color: transparent;
+  padding: 0;
+  margin: 25px 0 0;
+  display: inline-block;
+  opacity: 0;
+  animation: entradaBread 1s ease .6s forwards;
+}
+@keyframes entradaBread {
+	from {
+		opacity: 0;
+		transform: translateX(25px);
+	}
+
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+.breadcrumb > li.breadcrumb-item {
+  font-size: 20px;
+  float: left;
+  color: #fff;
+}
+.black-layer ol.breadcrumb > li.breadcrumb-item {color: #fff;}
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+  color: #fff;
+  padding: 0;
+  margin: 0 12px;
+  font-size:16px;
+}
+/*Aside*/
+.notice-aside{
+  margin-top: 4vh;
+}
+.notice-aside:hover{
+  cursor: pointer;
+}
+.thumb{
+  width: 100%;
+}
+.thumb img{
+  width: 100%;
+  height: 24vh;
+  object-fit: cover;
+  margin: auto;
+}
+.post-title{
+  width: 100%;
+}
+.post-title a{
+  width: 100%;
+  font-size: 18px;
+  text-decoration: none;
+  color: #212529;
+}
+.details-post{
+  font-size: 12px;
+  color: #8395a7;
+}
+.notice-aside:hover .post-title a{
+  width: 100%;
+  font-size: 18px;
+  text-decoration: none;
+  color: #0c2461;
+  transition: .2s ease;
+}
+.post-contenido{
+  font-size: 15px;
+  width: 100%;
+}
+.container-read-more{
+  width: 100%;
+  display: flex;
+  margin-top: -1vh;
+}
+.bg-post-notice{
+  width: 72%;
+  background-color: #8395a7;
+  height: 1px;
+  float: left;
+}
+.container-read-more a{
+  text-align: right;
+  float: right;
+  width: 28%;
+  font-size: 15px;
+  color: #8395a7;
+  margin-top: 5px;
+  text-decoration: none;
+}
+.container-read-more a:hover{
+  color: #0c2461;
+  transition: .2 ease;
+}
+article p{
+  text-align: justify;
+}
+@media screen and (max-width: 768px){
+    .container-historia{
+      padding: 4vh 4vh;
+    }
+  }

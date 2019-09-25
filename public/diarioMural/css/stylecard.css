@@ -37,6 +37,7 @@ aside{
   overflow: hidden;
   font-family: 'Sawarabi Mincho', sans-serif;
   box-shadow: 0 0 20px #00000070;
+  height: 58vh;
 }
 .middle{
   float: left;
@@ -106,5 +107,8 @@ p{
   padding: 10px;
   background: #0b3955;
   border-radius: 2%;
+  text-align: center;
+}
+.father{
   text-align: center;
 }

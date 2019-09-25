@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\FormularioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,15 @@ Route::post('/contactar', 'FormularioController@contact')->name('contact');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+
+Route::get('noticicias/aprobar/{id}',array('as'=>'aprobarN','uses'=>'Voyager\NoticiaController@aprobar'));
+Route::get('galerias/aprobar/{id}',array('as'=>'aprobarG','uses'=>'Voyager\GaleriaController@aprobars'));
+
 });
+
+
+
+
 
 Route::resource('/Tareas','Eventcontroller');
 
@@ -40,7 +49,6 @@ Route::resource('/historia','HistoriaController');
 
 Route::resource('/inicio','IndexController');
 
-Route::view('/contacto','contacto');
-Route::view('/postulacion','formulario')->name('postulacion');
+Route::get('/postulacion','FormularioController@index')->name('postulacion');
 Route::post('postulacion','FormularioController@store');
 Route::view('/gracias','gracias');

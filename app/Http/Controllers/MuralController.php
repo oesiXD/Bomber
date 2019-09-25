@@ -114,7 +114,7 @@ class MuralController extends Controller
     }
 
     public function recargar(){
-        $tare = Tarea::orderBy('created_at', 'desc')->paginate(5);
+        $tare = Tarea::orderBy('created_at', 'desc')->paginate(4);
         $observacion = Observacione::orderBy('created_at', 'desc')->paginate(5);
         $visit = Visita::orderBy('created_at', 'desc')->paginate(5);
         $novedad = Novedade::orderBy('created_at', 'desc')->paginate(5);
@@ -261,7 +261,7 @@ class MuralController extends Controller
         ";
           foreach($avis as $aviso){
         echo"
-        <marquee  >
+        <marquee>
           <div class='info-aviso'>
 
             <h1>".$aviso->descripcion."</h1>

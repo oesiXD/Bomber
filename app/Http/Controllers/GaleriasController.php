@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Noticia;
-use App\GaleriaNoticia;
 use Illuminate\Support\Facades\DB;
 class GaleriasController extends Controller
 {
@@ -15,7 +14,7 @@ class GaleriasController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -48,8 +47,10 @@ class GaleriasController extends Controller
     public function show($id)
     {
       $noti =  DB::table('noticias')->where('id',$id)->get();
-      $galerinoti =  DB::table('galerianoticia')->select('archivo')->where('galeriaNoticia_fk',$id)->get();
-      return view('Noticiafoto', compact('noti',$noti,'galerinoti',$galerinoti));
+      $notis = Noticia::orderBy('created_at', 'desc')->paginate(3);
+      return view('Noticiafoto', compact('noti',$noti ,'notis',$notis ) );
+
+
     }
 
     /**

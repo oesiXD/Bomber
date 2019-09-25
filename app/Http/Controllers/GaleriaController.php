@@ -14,8 +14,28 @@ class Galeriacontroller extends Controller
      */
     public function index()
       {
-              $galeri = Galeria::orderBy('created_at', 'desc')->paginate(5);
-              return view('galerias', compact('galeri'));
+        $numero = DB::table('portadas')->count();
+
+        $numeros = range(1, $numero);
+        shuffle($numeros);
+        foreach ($numeros as $numero) {
+            $num = $numero;
+        }
+
+        $numero = DB::table('afiches')->count();
+
+      $numeros = range(1, $numero);
+      shuffle($numeros);
+      foreach ($numeros as $numero) {
+          $num = $numero;
+      }
+
+      $carrusel1 = DB::table('afiches')->where('id',$num)->get();
+
+        $portS = DB::table('portadas')->where('id',$num)->get();
+
+              $galeri = Galeria::where('estado','!=','no aprobado')->orderBy('created_at', 'desc')->paginate(4);
+              return view('galerias', compact('galeri','portS','carrusel1'));
         }
 
 
@@ -91,4 +111,6 @@ public function store(Request $request)
     {
         //
     }
+
+
 }

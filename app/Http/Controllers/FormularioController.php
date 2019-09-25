@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Mail;
 use App\Mail\MensajePostulacion;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class FormularioController extends Controller
 {
@@ -14,7 +15,18 @@ class FormularioController extends Controller
      */
     public function index()
     {
-        //
+
+        $numero = DB::table('portadas')->count();
+
+        $numeros = range(1, $numero);
+        shuffle($numeros);
+        foreach ($numeros as $numero) {
+            $num = $numero;
+        }
+
+        $portS = DB::table('portadas')->where('id',$num)->get();
+
+        return view('formulario', compact('portS'));
     }
 
     /**

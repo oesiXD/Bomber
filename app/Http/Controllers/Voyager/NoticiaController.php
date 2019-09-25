@@ -16,6 +16,7 @@ use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 use App\Noticia;
+use App\User;
 class NoticiaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseController
 {
     use BreadRelationshipParser;
@@ -129,6 +130,16 @@ class NoticiaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
             $view = "voyager::$slug.browse";
         }
 
+       $user_id = Auth::id();
+      $user_rol = DB::table('users')->select('role_id')->where('id',$user_id)->first();
+      $user_rol1 = json_decode(json_encode($user_rol),true);
+      $rol = DB::table('roles')->select('name')->where('id',$user_rol1)->first();
+      $rol1 = json_decode(json_encode($rol),true);
+      foreach ($rol1 as $rol) {
+       $rol = $rol;
+      }
+
+
         return Voyager::view($view, compact(
             'dataType',
             'dataTypeContent',
@@ -141,7 +152,8 @@ class NoticiaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
             'isServerSide',
             'defaultSearchKey',
             'usesSoftDeletes',
-            'showSoftDeleted'
+            'showSoftDeleted',
+            'rol'
         ));
     }
 
@@ -275,9 +287,11 @@ class NoticiaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         $rol = $rol;
       }
       //cosa
-      $galeria = Noticia::find($id);
-      $galeria->cargo_id = $rol;
-      $galeria->save();
+      $noticia = Noticia::find($id);
+      $noticia->cargo_id = $rol;
+      $noticia->save();
+
+
 
         $slug = $this->getSlug($request);
 
@@ -291,9 +305,11 @@ class NoticiaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         }
         $request->merge(['nombre'=>$user_name]);
 
-        $galeria = Noticia::find($id);
-        $galeria->nombre = $user_name;
-        $galeria->save();
+        $noticia = Noticia::find($id);
+        $noticia->nombre = $user_name;
+        $noticia->save();
+
+
 
         //Optener apellido paterno
 
@@ -305,9 +321,10 @@ class NoticiaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         }
 
         $request->merge(['apellidoP'=>$user_apellidoP]);
-        $galeria = Noticia::find($id);
-        $galeria->apellidoP = $user_apellidoP;
-        $galeria->save();
+
+        $noticia = Noticia::find($id);
+        $noticia->apellidoP = $user_apellidoP;
+        $noticia->save();
 
 
 
@@ -323,9 +340,26 @@ class NoticiaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         $request->merge(['apellidoM'=>$user_apellidoM]);
 
 
-        $galeria = Noticia::find($id);
-        $galeria->apellidoM = $user_apellidoM;
-        $galeria->save();
+        $noticia = Noticia::find($id);
+        $noticia->apellidoM = $user_apellidoM;
+        $noticia->save();
+
+
+            // usuario id por rol
+            $user_id_rol = DB::table('users')->select('role_id')->where('id',Auth::id())->get();
+            foreach($user_id_rol as $rol){
+              $rol = $rol->role_id;
+            }
+            if($rol == 3 ){
+
+               $noticia = Noticia::find($id);
+               $noticia->estado = 'no aprobado';
+               $noticia->save();
+
+
+            }elseif($rol != 3){
+              $request->merge(['estado'=>"aprobado"]);
+            }
 
 
 
@@ -427,8 +461,11 @@ class NoticiaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
       foreach ($rol1 as $rol) {
         echo $rol;
       }
+//fucionar los roles
 
       $request->merge(['cargo_id'=>$rol]);
+
+      $request->merge(['user_id'=> Auth::id()]);
 
 //optener name
 
@@ -462,7 +499,16 @@ class NoticiaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
 
       $request->merge(['apellidoM'=>$user_apellidoM]);
 
-
+          // usuario id por rol
+          $user_id_rol = DB::table('users')->select('role_id')->where('id',Auth::id())->get();
+          foreach($user_id_rol as $rol){
+            $rol = $rol->role_id;
+          }
+          if($rol == 3 ){
+            $request->merge(['estado'=>"no aprobado"]);
+          }elseif($rol != 3){
+            $request->merge(['estado'=>"aprobado"]);
+          }
 
 
 
@@ -794,5 +840,15 @@ class NoticiaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
 
         // No result found, return empty array
         return response()->json([], 404);
+    }
+
+
+    public function aprobar($id){
+
+        $noticia = Noticia::find($id);
+        $noticia->estado = 'aprobado';
+        $noticia->save();
+
+        return redirect('/admin/noticias');
     }
 }

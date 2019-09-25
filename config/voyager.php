@@ -149,7 +149,8 @@ return [
         ],
 
         'widgets' => [
-
+            '\\App\\Widgets\\Pendiente',
+            '\\App\\Widgets\\GaleriaP',
         ],
 
     ],

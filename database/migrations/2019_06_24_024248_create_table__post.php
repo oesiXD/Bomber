@@ -17,11 +17,13 @@ class CreateTablePost extends Migration
             $table->bigIncrements('id');
             $table->string('cargo_id');
             $table->string('nombre');
+            $table->string('estado');
             $table->string('apellidoP');
             $table->string('apellidoM');
             $table->string('titulo');
             $table->text('descripcion');
-            $table->string('fotoportada');
+            $table->text('fotoportada');
+            $table->text('archivo');
             $table->datetime('fechapublicada');
             $table->timestamps();
         });

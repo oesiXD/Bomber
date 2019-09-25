@@ -16,12 +16,14 @@ class TablaGaleria extends Migration
         Schema::create('galeria', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('cargo_id');
+            $table->string('estado');
             $table->string('nombre');
             $table->string('apellidoP');
             $table->string('apellidoM');
             $table->string('titulo');
             $table->string('descripcion');
-            $table->string('fotoportada');
+            $table->text('fotoportada');
+            $table->text('archivo');
             $table->datetime('fechapublicada');
             $table->timestamps();
         });

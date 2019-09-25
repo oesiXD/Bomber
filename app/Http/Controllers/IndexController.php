@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Historium;
 use App\Galeria;
 use App\Noticia;
+use App\Historium;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
@@ -17,7 +18,21 @@ class IndexController extends Controller
     {
       $noti = Noticia::orderBy('created_at', 'desc')->paginate(4);
       $galeri = Galeria::orderBy('created_at', 'desc')->paginate(4);
-      return view('index', compact('noti',$noti,'galeri',$noti));
+      $direx = DB::table('directivos')->get();
+      $carrusel = DB::table('carrusels')->get();
+
+
+      $numero = DB::table('afiches')->count();
+
+      $numeros = range(1, $numero);
+      shuffle($numeros);
+      foreach ($numeros as $numero) {
+          $num = $numero;
+      }
+
+      $carrusel1 = DB::table('afiches')->where('id',$num)->get();
+
+      return view('index', compact('noti',$noti,'galeri',$noti,'direx','carrusel','carrusel1'));
     }
 
     /**

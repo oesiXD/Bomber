@@ -7,7 +7,7 @@
     <title></title>
 </head>
 <body>
-<h1>Datos del Postilante</h2>
+<h1>Datos del Postulante</h2>
 <h2>Nombre: {{ $msj['nombres'] }}</h2>
 <h2>Apellidos: {{ $msj['apellidos'] }}</h2>
 <h2>Correo: {{ $msj['correo'] }}</h2>

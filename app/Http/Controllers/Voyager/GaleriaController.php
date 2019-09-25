@@ -16,7 +16,7 @@ use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 use App\Galeria;
-
+use App\User;
 class GaleriaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseController
 {
     use BreadRelationshipParser;
@@ -130,6 +130,16 @@ class GaleriaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
             $view = "voyager::$slug.browse";
         }
 
+       $user_id = Auth::id();
+      $user_rol = DB::table('users')->select('role_id')->where('id',$user_id)->first();
+      $user_rol1 = json_decode(json_encode($user_rol),true);
+      $rol = DB::table('roles')->select('name')->where('id',$user_rol1)->first();
+      $rol1 = json_decode(json_encode($rol),true);
+      foreach ($rol1 as $rol) {
+       $rol = $rol;
+      }
+
+
         return Voyager::view($view, compact(
             'dataType',
             'dataTypeContent',
@@ -142,7 +152,8 @@ class GaleriaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
             'isServerSide',
             'defaultSearchKey',
             'usesSoftDeletes',
-            'showSoftDeleted'
+            'showSoftDeleted',
+            'rol'
         ));
     }
 
@@ -280,6 +291,8 @@ class GaleriaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
       $galeria->cargo_id = $rol;
       $galeria->save();
 
+
+
         $slug = $this->getSlug($request);
 
 
@@ -306,9 +319,13 @@ class GaleriaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         }
 
         $request->merge(['apellidoP'=>$user_apellidoP]);
+
         $galeria = Galeria::find($id);
         $galeria->apellidoP = $user_apellidoP;
         $galeria->save();
+
+
+
 
 
 
@@ -327,6 +344,25 @@ class GaleriaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         $galeria = Galeria::find($id);
         $galeria->apellidoM = $user_apellidoM;
         $galeria->save();
+
+
+         // usuario id por rol
+         $user_id_rol = DB::table('users')->select('role_id')->where('id',Auth::id())->get();
+         foreach($user_id_rol as $rol){
+           $rol = $rol->role_id;
+         }
+         if($rol == 3 ){
+
+            $galeria = Galeria::find($id);
+            $galeria->estado = 'no aprobado';
+            $galeria->save();
+
+
+         }elseif($rol != 3){
+           $request->merge(['estado'=>"aprobado"]);
+         }
+
+
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
@@ -426,8 +462,11 @@ class GaleriaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
       foreach ($rol1 as $rol) {
         echo $rol;
       }
+//fucionar los roles
 
       $request->merge(['cargo_id'=>$rol]);
+
+      $request->merge(['user_id'=> Auth::id()]);
 
 //optener name
 
@@ -461,7 +500,16 @@ class GaleriaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
 
       $request->merge(['apellidoM'=>$user_apellidoM]);
 
-
+          // usuario id por rol
+          $user_id_rol = DB::table('users')->select('role_id')->where('id',Auth::id())->get();
+          foreach($user_id_rol as $rol){
+            $rol = $rol->role_id;
+          }
+          if($rol == 3 ){
+            $request->merge(['estado'=>"no aprobado"]);
+          }elseif($rol != 3){
+            $request->merge(['estado'=>"aprobado"]);
+          }
 
 
 
@@ -794,4 +842,15 @@ class GaleriaController extends \TCG\Voyager\Http\Controllers\VoyagerBaseControl
         // No result found, return empty array
         return response()->json([], 404);
     }
+
+
+    public function aprobars($id){
+
+        $galeria = Galeria::find($id);
+        $galeria->estado = 'aprobado';
+        $galeria->save();
+
+        return redirect('/admin/galeria');
+    }
+
 }
